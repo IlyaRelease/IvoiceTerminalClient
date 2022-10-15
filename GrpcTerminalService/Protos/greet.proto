@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GrpcTerminalService";
+
+service Invoicer {
+  rpc GetNewClientNumber (ClientIdRequest) returns (ClientIdReply);
+  rpc GetClientStatus (ClientStatusRequest) returns (ClientStatusReply);
+  rpc SetClientStatus (ClientStatusRequest) returns (ClientStatusReply);
+  rpc GetInvoices (ClientIdRequest) returns (stream InvoiceReply);
+}
+
+message ClientIdRequest {
+	int32 group = 1;
+}
+
+message ClientIdReply {
+	string number = 1;
+}
+
+message ClientStatusRequest {
+	string number = 1;
+}
+
+message ClientStatusReply {
+	bool status = 1;
+}
+
+message InvoiceReply {
+	int32 Id = 1;
+	string Number = 2;
+	int32 Group = 3;
+	google.protobuf.Timestamp Date = 4;
+	bool Status = 5;
+}
